@@ -1,10 +1,16 @@
 {
   "name": "template-express-ts",
   "version": "1.0.0",
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "express",
+    "typescript",
+    "prisma",
+    "postgres",
+    "neon"
+  ],
+  "author": "Md Abid Hussain",
   "license": "ISC",
-  "description": "Backend template with Express and TypeScript",
+  "description": "Backend template with Express and TypeScript and using Postgres Neon with Prisma",
   "prisma": {
     "schema": "./src/prisma/schema.prisma"
   },
