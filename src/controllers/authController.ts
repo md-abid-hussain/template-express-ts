@@ -77,8 +77,8 @@ const login = async (req: Request, res: Response) => {
     });
   }
 
-  const accessToken = jwt.sign({ email }, ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-  const refreshToken = jwt.sign({ email }, REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+  const accessToken = jwt.sign({ id: userExist.id, email }, ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+  const refreshToken = jwt.sign({ id: userExist.id, email }, REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
 
   res.cookie('jwt', refreshToken, {
     httpOnly: true,
@@ -120,7 +120,7 @@ const refresh = async (req: Request, res: Response) => {
       });
     }
 
-    const accessToken = jwt.sign({ email: existingUser.email }, ACCESS_TOKEN_SECRET, {
+    const accessToken = jwt.sign({ id: existingUser.id, email: existingUser.email }, ACCESS_TOKEN_SECRET, {
       expiresIn: '15m',
     });
 

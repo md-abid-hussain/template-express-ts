@@ -1,4 +1,4 @@
-import { logEvents } from './logEvents';
+import eventLogger from '../utils/eventLogger';
 import { type Request, type Response, type NextFunction } from 'express';
 import { CustomError } from '../errors/CustomError';
 
@@ -9,7 +9,7 @@ export const errorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction,
 ) => {
-  logEvents(`${err.name}\t${err.message}`, 'errorLog.txt');
+  eventLogger(`${err.name}\t${err.message}`, 'errorLog.txt');
   if (err instanceof CustomError) {
     const { statusCode, errors, logging } = err;
     if (logging) {

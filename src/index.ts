@@ -1,24 +1,30 @@
 import { config } from 'dotenv';
 config();
-
+import 'express-async-errors';
 import express, { Express, Request, Response } from 'express';
 import { logger } from './middlewares/logEvents';
 import { errorHandler } from './middlewares/errorHandler';
 import { CustomRequestError } from './errors/CustomError';
 import { prisma } from './prisma/script';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUI from 'swagger-ui-express';
+import swaggerOptions from './configs/swaggerConfig';
+// Routes
+import authRoute from './routes/authRoute';
 
 const app: Express = express();
 app.use(logger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-import authRoute from './routes/authRoute';
+// Swagger setup
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
-app.use('/', (req: Request, res: Response) => {
-  res.send('Welcome to the API');
-});
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.use('/auth', authRoute);
+app.use('/', (req: Request, res: Response) => {
+  return res.send('Welcome to the API');
+});
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.all('*', (req: Request, res: Response) => {
