@@ -1,0 +1,2 @@
+echo "running pre-commit hook"
+npm run format
